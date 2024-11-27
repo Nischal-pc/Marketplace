@@ -1,7 +1,7 @@
 import Home from "./pages/Home";
 import About from "./pages/About";
 import Favorites from "./pages/Favorites";
-import Cart from "./pages/Cart";
+import Cart from "./cart/Cart";
 import { Routes, Route } from "react-router";
 function App() {
   return (

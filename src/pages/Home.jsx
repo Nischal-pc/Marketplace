@@ -56,6 +56,7 @@ const Home = () => {
                     title={currentValue.title}
                     image={currentValue.image}
                     price={currentValue.price}
+                    id={currentValue.id}
                     rating={currentValue.rating?.rate}
                     count={currentValue.rating?.count}
                   />

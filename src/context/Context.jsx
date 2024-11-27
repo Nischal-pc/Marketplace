@@ -1,10 +1,20 @@
-import { createContext, useState } from "react";
+import { createContext, useEffect, useState } from "react";
 
 const initialState = {};
 export const CartContext = createContext(initialState);
 
 export default function CartContextProvider({ children }) {
-  const [cart, setCart] = useState([]);
+  const [cart, setCart] = useState(() => {
+    try {
+      const savedToCart = localStorage.getItem("cart");
+      return savedToCart ? JSON.parse(savedToCart) : [];
+    } catch (err) {
+      console.log("Error in retrieving Cart Data:", err);
+    }
+  });
+  useEffect(() => {
+    localStorage.setItem("cart", JSON.stringify(cart));
+  }, [cart]);
   const addToCart = (value) => {
     setCart((prevData) => {
       const validCartData = Array.isArray(prevData)
@@ -15,8 +25,11 @@ export default function CartContextProvider({ children }) {
     });
     console.log("called from the contextprovdier with value:", cart);
   };
+  const deleteFromCart = (id) => {
+    setCart(cart.filter((currentCartValue) => currentCartValue.id != id));
+  };
   return (
-    <CartContext.Provider value={{ cart, addToCart }}>
+    <CartContext.Provider value={{ cart, addToCart, deleteFromCart }}>
       {children}
     </CartContext.Provider>
   );

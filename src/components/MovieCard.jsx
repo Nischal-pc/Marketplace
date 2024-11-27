@@ -2,7 +2,7 @@ import { useContext } from "react";
 import apple from "../assets/apple.jpg";
 import { CartContext } from "../context/Context";
 
-const MovieCard = ({ title, image, rating, price, count }) => {
+const MovieCard = ({ title, image, rating, price, id }) => {
   const { cart, addToCart } = useContext(CartContext);
   return (
     <div className="w-max-full h-1/2 mb-4 mx-0">
@@ -77,7 +77,7 @@ const MovieCard = ({ title, image, rating, price, count }) => {
               {`$${price}`}
             </span>
             <button
-              onClick={() => addToCart({ image, price })}
+              onClick={() => addToCart({ image, price, id, title })}
               className="text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800"
             >
               Add to cart
