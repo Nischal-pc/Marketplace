@@ -4,6 +4,7 @@ import Navbar from "../components/Navbar";
 import { fetchData } from "../services/api";
 import { useContext } from "react";
 import { CartContext } from "../context/Context";
+import Login from "../front/Login";
 const Home = () => {
   const [store, setStore] = useState(() => {
     try {
@@ -40,6 +41,7 @@ const Home = () => {
 
   return (
     <div>
+      <Login />
       <Navbar />
       {loading ? (
         <h1>Loading</h1>

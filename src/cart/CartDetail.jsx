@@ -68,7 +68,7 @@ const CartDetail = ({ image, price, title, id }) => {
                   stroke=""
                   stroke-width="1.6"
                   stroke-linecap="round"
-                  stroke-linejoin="round"
+                  strokeLinejoin="round"
                 />
               </svg>
             </button>
@@ -92,7 +92,7 @@ const CartDetail = ({ image, price, title, id }) => {
                   stroke=""
                   stroke-width="1.6"
                   stroke-linecap="round"
-                  stroke-linejoin="round"
+                  strokeLinejoin="round"
                 />
               </svg>
             </button>

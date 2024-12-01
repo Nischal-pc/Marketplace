@@ -12,9 +12,16 @@ export default function CartContextProvider({ children }) {
       console.log("Error in retrieving Cart Data:", err);
     }
   });
+
+  let sum = 0;
+  cart.forEach((num) => {
+    sum += num.price;
+  });
+
   useEffect(() => {
     localStorage.setItem("cart", JSON.stringify(cart));
   }, [cart]);
+
   const addToCart = (value) => {
     setCart((prevData) => {
       const validCartData = Array.isArray(prevData)
@@ -29,7 +36,7 @@ export default function CartContextProvider({ children }) {
     setCart(cart.filter((currentCartValue) => currentCartValue.id != id));
   };
   return (
-    <CartContext.Provider value={{ cart, addToCart, deleteFromCart }}>
+    <CartContext.Provider value={{ cart, addToCart, deleteFromCart, sum }}>
       {children}
     </CartContext.Provider>
   );
