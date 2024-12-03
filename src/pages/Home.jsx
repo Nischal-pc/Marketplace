@@ -4,8 +4,12 @@ import Navbar from "../components/Navbar";
 import { fetchData } from "../services/api";
 import { useContext } from "react";
 import { CartContext } from "../context/Context";
+import { AuthContext } from "../context/authContext";
+import { useNavigate } from "react-router";
 import Login from "../front/Login";
 const Home = () => {
+  const { auth } = useContext(AuthContext);
+  const navigate = useNavigate();
   const [store, setStore] = useState(() => {
     try {
       const savedTasks = localStorage.getItem("store");
@@ -38,10 +42,9 @@ const Home = () => {
     };
     loadData();
   }, []);
-
+  if (!auth.user) navigate("/login");
   return (
     <div>
-      <Login />
       <Navbar />
       {loading ? (
         <h1>Loading</h1>

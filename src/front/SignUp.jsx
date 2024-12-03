@@ -1,4 +1,33 @@
+import { useState, useContext } from "react";
+import { Link } from "react-router";
+import { AuthContext } from "../context/authContext";
+import { useNavigate } from "react-router";
+
 const SignUp = () => {
+  const { createUser } = useContext(AuthContext);
+  const [signUp, setSignUp] = useState([]);
+  const [checked, setChecked] = useState(false);
+  const navigate = useNavigate();
+  const setUserEmail = (e) => {
+    setSignUp((prev) => {
+      return { ...prev, email: e };
+    });
+    console.log(signUp);
+  };
+  const setUserPassword = (e) => {
+    setSignUp((prev) => {
+      return { ...prev, password: e };
+    });
+    console.log(signUp);
+  };
+  const onHandleChange = () => {
+    setChecked(!checked);
+  };
+  const handleSubmit = async (event) => {
+    event.preventDefault();
+    createUser(signUp);
+    navigate("/login");
+  };
   return (
     <div className="font-[sans-serif] bg-white max-w-4xl flex items-center mx-auto md:h-screen p-4">
       <div className="grid md:grid-cols-3 items-center shadow-[0_2px_10px_-3px_rgba(6,81,237,0.3)] rounded-xl overflow-hidden">
@@ -23,7 +52,10 @@ const SignUp = () => {
           </div>
         </div>
 
-        <form className="md:col-span-2 w-full py-6 px-6 sm:px-16">
+        <form
+          className="md:col-span-2 w-full py-6 px-6 sm:px-16"
+          onSubmit={handleSubmit}
+        >
           <div className="mb-6">
             <h3 className="text-gray-800 text-2xl font-bold">
               Create an account
@@ -66,6 +98,7 @@ const SignUp = () => {
                   name="email"
                   type="email"
                   required
+                  onChange={(e) => setUserEmail(e.target.value)}
                   className="text-gray-800 bg-white border border-gray-300 w-full text-sm px-4 py-2.5 rounded-md outline-blue-500"
                   placeholder="Enter email"
                 />
@@ -110,6 +143,7 @@ const SignUp = () => {
                   name="password"
                   type="password"
                   required
+                  onChange={(e) => setUserPassword(e.target.value)}
                   className="text-gray-800 bg-white border border-gray-300 w-full text-sm px-4 py-2.5 rounded-md outline-blue-500"
                   placeholder="Enter password"
                 />
@@ -133,6 +167,7 @@ const SignUp = () => {
                 id="remember-me"
                 name="remember-me"
                 type="checkbox"
+                onChange={onHandleChange}
                 className="h-4 w-4 shrink-0 text-blue-600 focus:ring-blue-500 border-gray-300 rounded"
               />
               <label
@@ -140,10 +175,7 @@ const SignUp = () => {
                 className="ml-3 block text-sm text-gray-800"
               >
                 I accept the{" "}
-                <a
-                  href="javascript:void(0);"
-                  className="text-blue-600 font-semibold hover:underline ml-1"
-                >
+                <a className="text-blue-600 font-semibold hover:underline ml-1">
                   Terms and Conditions
                 </a>
               </label>
@@ -152,7 +184,8 @@ const SignUp = () => {
 
           <div className="!mt-12">
             <button
-              type="button"
+              type="submit"
+              disabled={!checked}
               className="w-full py-3 px-4 tracking-wider text-sm rounded-md text-white bg-blue-600 hover:bg-gray-800 focus:outline-none"
             >
               Create an account
@@ -160,12 +193,12 @@ const SignUp = () => {
           </div>
           <p className="text-gray-800 text-sm mt-6 text-center">
             Already have an account?{" "}
-            <a
-              href="javascript:void(0);"
+            <Link
+              to="/login"
               className="text-blue-600 font-semibold hover:underline ml-1"
             >
               Login here
-            </a>
+            </Link>
           </p>
         </form>
       </div>

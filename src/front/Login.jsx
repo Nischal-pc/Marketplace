@@ -1,12 +1,41 @@
 import SignUp from "./SignUp";
 import { Link } from "react-router";
+import { AuthContext } from "../context/authContext";
+import { useContext, useState } from "react";
+import { useNavigate } from "react-router";
+import toast from "react-hot-toast";
+import { Toaster } from "react-hot-toast";
 const Login = () => {
+  const { auth, loginUser } = useContext(AuthContext);
+  const [login, setLogin] = useState([]);
+  const navigation = useNavigate();
+  const onHandleSubmit = async (e) => {
+    e.preventDefault();
+    try {
+      await loginUser(login);
+    } catch (error) {
+      console.log(error);
+      toast.error(error.message);
+    }
+  };
+  const setUserEmail = (e) => {
+    setLogin((prev) => {
+      return { ...prev, email: e };
+    });
+  };
+  const setUserPassword = (e) => {
+    setLogin((prev) => {
+      return { ...prev, password: e };
+    });
+  };
+
+  if (auth.user) navigation("/");
   return (
     <div className="font-[sans-serif]">
       <div className="min-h-screen flex flex-col items-center justify-center">
         <div className="grid md:grid-cols-2 items-center gap-4 max-md:gap-8 max-w-6xl max-md:max-w-lg w-full p-4 m-4 shadow-[0_2px_10px_-3px_rgba(6,81,237,0.3)] rounded-md">
           <div className="md:max-w-md w-full px-4 py-4">
-            <form>
+            <form onSubmit={onHandleSubmit}>
               <div className="mb-12">
                 <h3 className="text-gray-800 text-3xl font-extrabold">
                   Sign in
@@ -14,7 +43,7 @@ const Login = () => {
                 <p className="text-sm mt-4 text-gray-800">
                   Don't have an account{" "}
                   <Link
-                    to="signup"
+                    to="/signup"
                     className="text-blue-600 font-semibold hover:underline ml-1 whitespace-nowrap"
                   >
                     Register here
@@ -33,6 +62,7 @@ const Login = () => {
                     required
                     className="w-full text-gray-800 text-sm border-b border-gray-300 focus:border-blue-600 px-2 py-3 outline-none"
                     placeholder="Enter email"
+                    onChange={(e) => setUserEmail(e.target.value)}
                   />
                   <svg
                     xmlns="http://www.w3.org/2000/svg"
@@ -80,6 +110,7 @@ const Login = () => {
                     required
                     className="w-full text-gray-800 text-sm border-b border-gray-300 focus:border-blue-600 px-2 py-3 outline-none"
                     placeholder="Enter password"
+                    onChange={(e) => setUserPassword(e.target.value)}
                   />
                   <svg
                     xmlns="http://www.w3.org/2000/svg"
@@ -112,10 +143,7 @@ const Login = () => {
                   </label>
                 </div>
                 <div>
-                  <a
-                    href="jajvascript:void(0);"
-                    className="text-blue-600 font-semibold text-sm hover:underline"
-                  >
+                  <a className="text-blue-600 font-semibold text-sm hover:underline">
                     Forgot Password?
                   </a>
                 </div>
@@ -123,7 +151,7 @@ const Login = () => {
 
               <div className="mt-12">
                 <button
-                  type="button"
+                  type="submit"
                   className="w-full shadow-xl py-2.5 px-4 text-sm tracking-wide rounded-md text-white bg-blue-600 hover:bg-blue-700 focus:outline-none"
                 >
                   Sign in
