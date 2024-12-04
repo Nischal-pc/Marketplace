@@ -10,12 +10,12 @@ import Toaster from "react-hot-toast";
 createRoot(document.getElementById("root")).render(
   <StrictMode>
     {/* <Toaster /> */}
-    <AuthContextProvider>
-      <CartContextProvider>
-        <BrowserRouter>
+    <BrowserRouter>
+      <AuthContextProvider>
+        <CartContextProvider>
           <App />
-        </BrowserRouter>
-      </CartContextProvider>
-    </AuthContextProvider>
+        </CartContextProvider>
+      </AuthContextProvider>
+    </BrowserRouter>
   </StrictMode>
 );

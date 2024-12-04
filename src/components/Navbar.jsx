@@ -1,5 +1,9 @@
 import { Link } from "react-router";
+import { AuthContext } from "../context/authContext";
+import { useContext } from "react";
+
 const Navbar = () => {
+  const { handleLogout } = useContext(AuthContext);
   return (
     <div>
       <nav className="bg-white border-gray-200 dark:bg-gray-900">
@@ -170,6 +174,12 @@ const Navbar = () => {
                   </span>
                 </div>
               </Link>
+              <li>
+                <span
+                  className="fa-solid fa-arrow-right-from-bracket text-black"
+                  onClick={handleLogout}
+                ></span>
+              </li>
             </ul>
           </div>
         </div>
